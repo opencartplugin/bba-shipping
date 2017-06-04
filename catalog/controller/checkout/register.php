@@ -56,7 +56,6 @@ class ControllerCheckoutRegister extends Controller {
 		} else {
 			$data['postcode'] = '';
 		}
-		$data['postcode'] ='di checkout regis';
 		if (isset($this->session->data['shipping_address']['country_id'])) {
 			$data['country_id'] = $this->session->data['shipping_address']['country_id'];
 		} else {

@@ -18,7 +18,7 @@ class ModelAccountCustomer extends Model {
 		$country = $this->model_localisation_country->getCountryByCode($data['bbacountry']);
 		$data['country_id'] = $country['country_id'];
 		$data['postcode'] = $data['bbapostcode'];
-		$data['zone_id'] = 0;
+		$data['zone_id'] = null;
 		if ($country) {
 			$bbaaddress = $this->model_localisation_country->getBBAAddress($data['bbacountry'], $data['bbapostcode']);
 			$databba = array();
