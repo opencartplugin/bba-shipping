@@ -38,8 +38,32 @@ class ModelAccountAddress extends Model {
 	}
 
 	public function editAddress($address_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "address SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', city = '" . $this->db->escape($data['city']) . "', zone_id = '" . (int)$data['zone_id'] . "', country_id = '" . (int)$data['country_id'] . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') . "' WHERE address_id  = '" . (int)$address_id . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
+		//frd
+		$this->load->model('localisation/country');
+		$country = $this->model_localisation_country->getCountryByCode($data['bbacountry']);
+		$data['country_id'] = $country['country_id'];
+		$data['postcode'] = $data['bbapostcode'];
+		$data['zone_id'] = null;
+		if ($country) {
+			$bbaaddress = $this->model_localisation_country->getBBAAddress($data['bbacountry'], $data['bbapostcode']);
+			$databba = array();
+			foreach ($bbaaddress['content'] as $d) {
+				if ($d['id'] == $data['bbacity']) {
+					$databba = $d;
+					break;
+				}
+			}
+			$data['city']=$databba['name'];
+			if (isset($databba['state']['name'])) {
+				$this->load->model('localisation/zone');
+				$zone = $this->model_localisation_zone->getZoneByName($country['country_id'], $databba['state']['name']);
+				$data['zone_id'] = $zone['zone_id'];
+			}
+		}
+		//----
 
+		//$this->db->query("UPDATE " . DB_PREFIX . "address SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', address_1 = '" . $this->db->escape($data['address_1'bbacountry = '" . $this->db->escape($data['bbacountry']) . "', bbacity = '" . (int)$data['bbacity'] . "', bbapostcode = '" . $this->db->escape($data['bbapostcode']) . "', ]) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', city = '" . $this->db->escape($data['city']) . "', zone_id = '" . (int)$data['zone_id'] . "', country_id = '" . (int)$data['country_id'] . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') . "' WHERE address_id  = '" . (int)$address_id . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "address SET bbacountry = '" . $this->db->escape($data['bbacountry']) . "', bbacity = '" . (int)$data['bbacity'] . "', bbapostcode = '" . $this->db->escape($data['bbapostcode']) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', city = '" . $this->db->escape($data['city']) . "', zone_id = '" . (int)$data['zone_id'] . "', country_id = '" . (int)$data['country_id'] . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? json_encode($data['custom_field']) : '') . "' WHERE address_id  = '" . (int)$address_id . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
 		if (!empty($data['default'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 		}
@@ -95,6 +119,10 @@ class ModelAccountAddress extends Model {
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
 				'custom_field'   => json_decode($address_query->row['custom_field'], true)
+				,'bbacountry'     => $address_query->row['bbacountry'],//frd 3
+        'bbacity'     => $address_query->row['bbacity'],//frd 3
+				'bbapostcode'     => $address_query->row['bbapostcode'],//frd 3
+
 			);
 
 			return $address_data;
