@@ -314,5 +314,20 @@ class ControllerExtensionShippingBbishipping extends Controller {
 			$data = array_values($_data);
 			return $data;
 	}
+	public function install() {
+		if ($this->user->hasPermission('modify', 'extension/extension')) {
+			$this->load->model('extension/shipping/bbishipping');
+
+			$this->model_extension_shipping_bbishipping->install();
+		}
+	}
+
+	public function uninstall() {
+		if ($this->user->hasPermission('modify', 'extension/extension')) {
+			$this->load->model('extension/shipping/bbishipping');
+
+			$this->model_extension_shipping_bbishipping->uninstall();
+		}
+	}
 
 }
