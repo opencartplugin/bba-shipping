@@ -257,32 +257,4 @@ class ControllerExtensionTotalShipping extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/*public function getToken() {
-		$classname = 'bbishipping';//str_replace('vq2-catalog_model_shipping_', '', basename(__FILE__, '.php'));
-		$username = $this->config->get($classname.'_username');
-		$password = $this->config->get($classname.'_password');
-		$appid = $this->config->get($classname.'_appid');
-		$secretkey = $this->config->get($classname.'_secretkey');
-		$authcode = $this->config->get($classname.'__autcode');
-
-		$ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://auth.bbalogistics.com.au/oauth/token");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, "password=" . urlencode($password) . "&username=" . urlencode($username) . "&grant_type=password&client_secret=" . urlencode($secretkey) . "&client_id=" . urlencode($appid));
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_USERPWD, $appid . ":" . $secretkey);
-    $headers = array();
-    $headers[] = "Accept: application/json";
-    $headers[] = "Content-Type: application/x-www-form-urlencoded";
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    $result = curl_exec($ch);
-    if (curl_errno($ch)) {
-      echo 'Error:' . curl_error($ch);
-    } else {
-      echo $result;
-    }
-    curl_close ($ch);
-
-	}*/
-
 }

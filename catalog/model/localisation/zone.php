@@ -2,7 +2,9 @@
 class ModelLocalisationZone extends Model {
 	//frd
 	public function getZoneByName($countryId, $name) {
-		$query = $this->db->query("SELECT zone_id FROM " . DB_PREFIX . "zone WHERE country_id = '" . (int)$countryId . "' AND `name` = '" . $name . "'");
+		//HATI-HATI KALO ERROR GANTI * DENGAN `zone_id`
+		//$query = $this->db->query("SELECT zone_id FROM " . DB_PREFIX . "zone WHERE country_id = '" . (int)$countryId . "' AND `name` = '" . $name . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone WHERE country_id = '" . (int)$countryId . "' AND `name` = '" . $name . "'");
 		return $query->row;
 	}
   //----

@@ -71,5 +71,10 @@ $_['error_upload_999']      = 'Warning: No error code available!';
 $_['error_curl']            = 'CURL: Error Code(%s): %s';
 
 //frd
-$_['entry_city']            = 'City';
-$_['entry_state']         = 'Region / State';
+$_['entry_city']             = 'City';
+$_['entry_state']            = 'Region / State';
+$_['entry_country']          = 'Country';
+$_['entry_postcode']         = 'Post Code';
+$_['text_shipping_method']   = 'Shipping Method:';
+$_['button_close']           = 'Close';
+$_['button_estimate']        = 'Estimate';

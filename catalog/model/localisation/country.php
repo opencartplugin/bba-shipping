@@ -2,7 +2,9 @@
 class ModelLocalisationCountry extends Model {
 	//frd
 	public function getCountryByCode($code) {
-		$query = $this->db->query("SELECT `country_id` FROM " . DB_PREFIX . "country WHERE iso_code_2 = '" . $code . "'");
+		//HATI-HATI KALO ERROR GANTI * DENGAN `country_id`
+		//$query = $this->db->query("SELECT `country_id` FROM " . DB_PREFIX . "country WHERE iso_code_2 = '" . $code . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE iso_code_2 = '" . $code . "'");
 		return $query->row;
 	}
 
