@@ -318,6 +318,7 @@
           </div>
           <?php } ?>
           <!--frd-->
+          <h3>Shipping Cost Estimation</h3>
           <div class="form-group">
             <label class="control-label" for="input-bbacountry"><?php echo $entry_country; ?></label>
             <select name="bbacountry" id="input-bbacountry" class="form-control" style="width: 100%;">
@@ -629,7 +630,7 @@ $(document).ready(function() {
       //frd
       //data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent($('input[name=\'postcode\']').val()),
       data: 'bbacountry=' + $('select[name=\'bbacountry\']').val() + '&bbacity=' + $('select[name=\'bbacity\']').val() +
-      '&bbapostcode=' + $('select[name=\'bbapostcode\']').val() + '&quantity=' + $('input[name=\'quantity\']').val() + '&product_id=' + <?php echo $product_id;?>, 
+      '&bbapostcode=' + $('select[name=\'bbapostcode\']').val() + '&quantity=' + $('input[name=\'quantity\']').val() + '&product_id=' + <?php echo $product_id;?>,
       //$('input[name=\'quantity\']').text(),
       // + '&product_id=' + <?php echo $product_id; ?>
       dataType: 'json',
