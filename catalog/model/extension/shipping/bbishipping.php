@@ -18,21 +18,38 @@ class ModelExtensionShippingBbishipping extends Model {
 											'city' => $address['bbacity'],
 											'postCode'=>$address['bbapostcode']
 							));
-		$cart = $this->cart->getProducts();
-		//print_r($cart);
-		foreach ($cart as  $c) {
-			$height = $c['width'] == 0 ? $this->config->get($classname.'_width') : $c['width'];
-			$length = $c['length'] == 0 ? $this->config->get($classname.'_length') : $c['length'];
-			$width = $c['width'] == 0 ? $this->config->get($classname.'_width') : $c['width'];
-			$weight = $c['weight'] == 0 ? $this->config->get($classname.'_weight') : $c['weight'];
+		if (!isset($address['product'])) {
+			$cart = $this->cart->getProducts();
+			//print_r($cart);
+			foreach ($cart as  $c) {
+				$height = $c['width'] == 0 ? $this->config->get($classname.'_width') : $c['width'];
+				$length = $c['length'] == 0 ? $this->config->get($classname.'_length') : $c['length'];
+				$width = $c['width'] == 0 ? $this->config->get($classname.'_width') : $c['width'];
+				$weight = $c['weight'] == 0 ? $this->config->get($classname.'_weight') : $c['weight'];
+				$packages[] = array(
+											'length'=>$length,
+											'width'=>$width,
+											'height'=>$height,
+											'weight' => $weight,
+											'quantity'=>$c['quantity'],
+											'measureUnit'=>'cm',
+											'weightUnit'=>'kilograms');
+			}
+	  } else {
+			$height = $address['product']['width'] == 0 ? $this->config->get($classname.'_width') : $address['product']['width'];
+			$length = $address['product']['length'] == 0 ? $this->config->get($classname.'_length') : $address['product']['length'];
+			$width = $address['product']['width'] == 0 ? $this->config->get($classname.'_width') : $address['product']['width'];
+			$weight = $address['product']['weight'] == 0 ? $this->config->get($classname.'_weight') : $address['product']['weight'];
+
 			$packages[] = array(
-										'length'=>$length,
-										'width'=>$width,
-										'height'=>$height,
+										'length' => $length,
+										'width' => $width,
+										'height' => $height,
 										'weight' => $weight,
-										'quantity'=>$c['quantity'],
+										'quantity'=>$address['quantity'],
 										'measureUnit'=>'cm',
 										'weightUnit'=>'kilograms');
+
 		}
 		$jsonfields = json_encode(array_merge($source, $dest, array('packages'=>$packages)));
 		$ch = curl_init();

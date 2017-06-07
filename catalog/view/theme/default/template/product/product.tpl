@@ -629,7 +629,9 @@ $(document).ready(function() {
       //frd
       //data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent($('input[name=\'postcode\']').val()),
       data: 'bbacountry=' + $('select[name=\'bbacountry\']').val() + '&bbacity=' + $('select[name=\'bbacity\']').val() +
-      '&bbapostcode=' + $('select[name=\'bbapostcode\']').val(),
+      '&bbapostcode=' + $('select[name=\'bbapostcode\']').val() + '&quantity=' + $('input[name=\'quantity\']').val() + '&product_id=' + <?php echo $product_id;?>, 
+      //$('input[name=\'quantity\']').text(),
+      // + '&product_id=' + <?php echo $product_id; ?>
       dataType: 'json',
       beforeSend: function() {
         $('#button-quote').button('loading');
